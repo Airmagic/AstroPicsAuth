@@ -1,0 +1,41 @@
+/* the styleing for the body */
+body {
+  padding: 15px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: whitesmoke;
+}
+
+/* the styleing for images */
+img {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* the styleing for the hyper links */
+a {
+  color: #00B7FF;
+}
+
+/* the styleing for the form buttons */
+form {
+  padding: 10px 0 10px 0;
+}
+
+/* the styleing for class with name fav-item */
+.fav-item {
+  padding: 20px 0 20px 0;
+}
+
+/* the styleing for class with name fav-image */
+.fav-image {
+  width: 200px;
+  display: inline;
+  border: 2px solid;
+}
+
+
+/* the styleing for class with name fav-date and fav-title */
+.fav-date, .fav-title {
+  display: inline;
+  padding: 20px;
+}

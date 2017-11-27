@@ -1,0 +1,36 @@
+{{!-- home-index for the site --}}
+{{!-- getting the title of the picture from apod --}}
+<h1>{{apod.title}}</h1>
+
+{{!-- getting image from the apod --}}
+{{#if apod.is_image }}
+  <img src="{{ apod.url }}">
+
+{{!-- error if the data is not a picture --}}  
+{{else}}
+  <P>Today's picture is a video or another media type.
+    <a href="{{ apod.url }}">Please click here to view.</a></P>
+{{/if}}
+
+{{!-- credits for the picture --}}
+<P>{{ apod.credit }}</P>
+
+{{!-- explaining the picture--}}
+<P>{{ apod.explanation }}</P>
+
+{{!-- The date the picture was nasa picture of the day--}}
+<P>This is NASA's Astronomy Picture of the Day for {{ apod.date }}.</P>
+
+{{!-- a link to nasa's website --}}
+<P><a href="{{ apod.nasa_url }}">See this image at NASA's website</a></P>
+
+{{!-- favorite button --}}
+<div class="add-favorites-form">
+    <form action="favorites/add" method="POST">
+      <input type="hidden" name="date" value="{{apod.date}}">
+      <input type="hidden" name="title" value="{{apod.title}}">
+      <input type="hidden" name="url" value="{{apod.url}}">
+      <input type="hidden" name="nasa_url" value="{{apod.nasa_url}}">
+      <input type="submit" class="btn btn-success" name="add" value="Add to favorites">
+    </form>
+</div>

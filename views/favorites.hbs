@@ -1,0 +1,26 @@
+
+{{!-- Header for the webpage --}}
+<h1>Favorites</h1>
+
+{{!-- made a div and a class to lable the favorites page --}}
+<div class="fav-list">
+	
+	{{!-- making a each loop to load all the pictures in the favorites list --}}
+	{{#each favorites}}
+		
+		{{!-- This happens if there is items stored in the favorites list --}}
+		<div class="fav-item">
+			<a href="{{this.nasa_url}}">
+				<img class="fav-image" src="{{this.url}}">
+			</a>
+			
+			<p class="fav-title">{{this.title}}</p>
+			<p class="fav-date">{{this.date}}</p>
+		</div>
+		
+		{{!-- This happens if there is nothing in the favorites list --}}
+		{{else}}
+			<p>No favorites saved yet</p>
+	{{/each}}
+		
+</div>
