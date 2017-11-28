@@ -1,0 +1,44 @@
+{{!-- page is displayed if user not logged in to password --}}
+<div id="auth-messages">
+
+{{!-- messages displayed each time --}}
+  <ul>{{#each messages}}
+    <li>{{this}}</li>
+    {{/each}}
+  </ul>
+
+</div>
+
+<div id='login'>
+
+  <h2>Log in</h2>
+  
+  {{!-- form to login as user for site --}}
+  <form action="/auth/login" method="POST">
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <br>
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <br>
+    <input type="submit" value="Login">
+  </form>
+
+</div>
+
+<div id='signup'>
+
+  <h2>Sign up for an account</h2>
+  
+  {{!-- form to signup to be a user for the site --}}
+  <form action="/auth/signup" method="POST">
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <br>
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <br>
+    <input type="submit" value="Sign up">
+  </form>
+
+</div>

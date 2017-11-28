@@ -4,12 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var flash = require('express-flash');
+var session = require('express-session');
+var mongoose = require('mongoose');
 var hbs = require('hbs');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
+var passport = require('passport');
+var passportConfig = require('./config/passport')(passport);
 
-var index = require('./routes/index');
-var favorites = require('./routes/favorites');
+/* var index = require('./routes/index');
+var favorites = require('./routes/favorites'); */
+
+var pics = require('./routes/pics');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -26,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var mongo_url = process.env.MONGO_URL;
+var mongo_url = process.env.MONGO_URLASTROPICAUTH;
 
 // Configure session store. Remember to configure DB url for this app's database
 var store = new MongoDBStore({ uri: mongo_url, collection: 'sessions'}, function(err) {
@@ -43,9 +51,18 @@ app.use(session({
   store: store
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use(flash());
+/* 
 app.use('/', index);
-app.use('/favorites', favorites);
+app.use('/favorites', favorites); */
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/auth', auth);   // Order matters!
+app.use('/', pics);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
