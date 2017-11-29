@@ -6,15 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('express-flash');
 var session = require('express-session');
-var mongoose = require('mongoose');
 var hbs = require('hbs');
-var session = require('express-session');
+
+var mongoose = require('mongoose');
 var MongoDBStore = require('connect-mongodb-session')(session);
 var passport = require('passport');
 var passportConfig = require('./config/passport')(passport);
 
-/* var index = require('./routes/index');
-var favorites = require('./routes/favorites'); */
+// environment variables
+var mongo_url = process.env.MONGO_URLASTROPIXAUTH;
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(mongo_url, {useMongoClient: true })
+	.then(() => {console.log('connected to MongoDB')})
+	.catch((err) => { console.log('Error connecting to mongoDB', err);});
 
 var pics = require('./routes/pics');
 var auth = require('./routes/auth');
@@ -34,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var mongo_url = process.env.MONGO_URLASTROPICAUTH;
 
 // Configure session store. Remember to configure DB url for this app's database
 var store = new MongoDBStore({ uri: mongo_url, collection: 'sessions'}, function(err) {
@@ -55,9 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-/* 
-app.use('/', index);
-app.use('/favorites', favorites); */
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

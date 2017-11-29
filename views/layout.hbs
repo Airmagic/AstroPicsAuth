@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
-
+	
     <title>{{title}}</title>
-
+	
+	
   </head>
   <body>
-
+	<!-- if statement that is showen when user is logged in -->
+		{{#if username}}
+			hello, {{username}}
+			<a href="/favorites">Favorites</a>
+			<a href='/auth/logout'>Logout</a>
+		{{else}}
+			<a href='/auth'>Login or signup</a>
+		{{/if}}
+			
+			
     {{{body}}}
 
     {{>navigation}}
-
+	<!-- adding a home button to the bottom of all the pages -->
+	<hr>
+	<p><a href="/">Home</a>
+	</p>
+  </body>
   </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "name": "AstroPics",
+  "name": "AstroPicsAuth",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.5",
     "morgan": "~1.7.0",
+    "request": "^2.83.0",
     "serve-favicon": "~2.3.2"
   },
   "engines": {
