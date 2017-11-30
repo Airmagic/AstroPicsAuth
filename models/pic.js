@@ -5,7 +5,10 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 //Define your schema: what fields will one pic document have
 var picSchema = new Schema( {
-  text: String,
+  date: Date,
+  title: String,
+  url: String,
+  nasa_url: String,
   
   /* Reference the user object who created the pic
   Useful if we need to access info about the user from the pic. */

@@ -11,27 +11,10 @@ function isLoggedIn(req, res, next) {
     res.locals.username = req.user.local.username;
     next();
   } else {
-     res.redirect('/auth'); 
+	  console.log('user is not auth ', req.user)
+     res.redirect('fetch_picture'); 
   }
 }
-
-/* Apply this middleware to every route in the file, so don't need to
-specify it for every router */
-
-  router.use(isLoggedIn);
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  /* finding if a user is loggined in */
-  Task.find({ creator: req.user._id, completed: false})
-	.then( (docs) => {
-		res.render('index', {title: 'Nasa pic', pics: docs})
-	})
-	.catch( (err) => {
-		next(err);
-	});
-});
-
 
 /* Fetch a picture from APOD. If random is specified, get a random
 picture. Otherwise, get today's picture.  */
@@ -54,5 +37,23 @@ router.get('/fetch_picture', function(req, res, next) {
     }, req.query.random);
 
 });
+
+router.use(isLoggedIn);
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+	
+  /* finding if a user is loggined in */
+  Pic.find({ creator: req.user._id})
+	.then( (docs) => {
+		res.render('index', {title: 'Nasa pic', pics: docs})
+	})
+	.catch( (err) => {
+		next(err);
+	});
+});
+
+
+
 
 module.exports = router;

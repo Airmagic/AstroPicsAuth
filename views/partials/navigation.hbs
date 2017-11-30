@@ -13,9 +13,12 @@
 	
 </div>
 
+{{!-- making it so if there is no username then wont have the button for favorites --}}
+{{#if username}}
 {{!-- adding a div to fetch my favorite pictures --}}
 <div class="fetch-favorites">
 	<a href="/favorites">
 		<button type="button" class="btn btn-info">Favorites</button>
 	</a>
 </div>
+{{/if}}

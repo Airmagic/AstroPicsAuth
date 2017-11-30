@@ -1,5 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var Pic = require('../models/pic');
+var ObjectId = require('mongoose').mongo.ObjectID;
+
+/* Middleware, to verify if the user is authenticated */
+function isLoggedIn(req, res, next) {
+    console.log('user is auth ', req.user)
+  if (req.isAuthenticated()) {
+    res.locals.username = req.user.local.username;
+    next();
+  } else {
+	  console.log('user is not auth ', req.user)
+     res.redirect('fetch_picture'); 
+  
 
 /* GET favorites page */
 router.get('/', function(req, res, next){
@@ -10,25 +23,17 @@ router.get('/', function(req, res, next){
 //added the favorite to an array
 router.post('/add', function(req, res, next){
 
-  // Create a favorites array in the session, if it does not exist
-  if (!req.session.favorites) {
-    req.session.favorites = [];
-  }
 
-  // Is this image already a favorite? Ignore
-  var isFav = false;
-  for (var i = 0 ; i < req.session.favorites.length; i++) {
-    if (req.session.favorites[i].date == req.body.date) {
-      // already in the array. Redirect.
-      isFav = true;  break;
-    }
+  new Pic( {creator: req.user._id, date: req.body.apod.date, 
+	title: req.body.apod.title, url: req.body.apod.url, nasa_url: req.body.apod.nasa_url} ).save()
+		.then ((newPic) => {
+			console.log('The new pic is added to favorites: ', newPic);
+			res.redirect('/favorites');
+		})
+      .catch((err) => {
+        next(err);   // most likely to be a database error.
+      });
   }
-
-  if (!isFav) {
-    // Add all the info about an image to req.session.favorites
-    req.session.favorites.push(req.body);
-  }
-  res.redirect('/favorites');
 
 });
 

@@ -23,7 +23,7 @@
 
 {{!-- a link to nasa's website --}}
 <P><a href="{{ apod.nasa_url }}">See this image at NASA's website</a></P>
-
+{{#if username}}
 {{!-- favorite button --}}
 <div class="add-favorites-form">
     <form action="favorites/add" method="POST">
@@ -34,3 +34,4 @@
       <input type="submit" class="btn btn-success" name="add" value="Add to favorites">
     </form>
 </div>
+{{/if}}
