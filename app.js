@@ -14,7 +14,7 @@ var passport = require('passport');
 var passportConfig = require('./config/passport')(passport);
 
 // environment variables
-var mongo_url = process.env.MONGO_URLASTROPIXAUTH;
+var mongo_url = process.env.MONGO_URL;
 
 mongoose.Promise = global.Promise;
 
@@ -24,6 +24,8 @@ mongoose.connect(mongo_url, {useMongoClient: true })
 
 var pics = require('./routes/pics');
 var auth = require('./routes/auth');
+var favorites = require('./routes/favorites');
+
 
 var app = express();
 
@@ -64,6 +66,7 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/favorites', favorites);
 app.use('/auth', auth);   // Order matters!
 app.use('/', pics);
 
