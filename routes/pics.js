@@ -12,24 +12,24 @@ function isLoggedIn(req, res, next) {
     next();
   } else {
 	  console.log('user is not auth ', req.user)
-     res.redirect('fetch_picture'); 
+     res.redirect('fetch_picture');
   }
 }
 
 /* Fetch a picture from APOD. If random is specified, get a random
 picture. Otherwise, get today's picture.  */
-router.get('/fetch_picture', function(req, res, next) {
-	
+router.get('/fetch_picture', isLoggedIn, function(req, res, next) {
+
 	/* Writing in the sever console to show what is happening */
   console.log('RANDOM? '  + req.query.random );
-	
+
 	/* showing a error if the apod api has any problems with access */
     apod(function(err, apod_data){
 
       if (err) {
         res.render('apod_error', {error: err.message, title : "Error"});
       }
-	  
+
       else {
         res.render('index', { apod : apod_data, title : "APOD for " + apod_data.date });
       }
@@ -42,7 +42,7 @@ router.use(isLoggedIn);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	
+
   /* finding if a user is loggined in */
   Pic.find({ creator: req.user._id})
 	.then( (docs) => {
